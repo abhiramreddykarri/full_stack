@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~~Mail Dispatcher~~ DashBoard</title>
+    <style>
+     /* ... Previous CSS ... */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px; /* Space between buttons and monster */
+}
+
+button {
+    background-color: #44a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #559;
+}
+
+.container {
+    position: relative;
+}
+
+/* ... Rest of the CSS ... */
+
+
+.container {
+    position: relative;
+}
+
+.monster {
+    width: 200px;
+    height: 200px;
+    background-color: #55aa55; 
+    position: absolute;
+    bottom: 50%; 
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform 0.3s ease-out;
+}
+
+.eye {
+    width: 40px;
+    height: 40px;
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+#leftEye {
+    left: 25%;
+}
+
+#rightEye {
+    right: 25%;
+}
+
+.monster-body {
+    width: 220px;
+    height: 300px;
+    background-color: #55aa55;
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 20px;
+    z-index: 0;
+    transition: transform 0.3s ease-out;
+}
+
+.arm {
+    width: 60px;
+    height: 150px;
+    background-color: #55aa55;
+    position: absolute;
+    top: 50px;
+    z-index: -1;
+    border-radius: 20px;
+}
+
+#leftArm {
+    left: -70px; 
+    transform: rotate(30deg);
+}
+
+#rightArm {
+    right: -70px;
+    transform: rotate(-30deg);
+}
+
+.leg {
+    width: 70px;
+    height: 150px;
+    background-color: #55aa55;
+    position: absolute;
+    bottom: -150px;
+    border-radius: 20px;
+}
+
+#leftLeg {
+    left: 20px;
+}
+
+#rightLeg {
+    right: 20px;
+}
+.button-container {
+    position: absolute;
+    left: 150px; /* Adjust as needed */
+    top: 10%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+}
+#login{
+    position: absolute;
+    left: 1000px;
+}
+.welcome-text {
+   position:absolute;
+   left: 500px;
+    font-size: 20px;
+    font-family:monospace;
+    color: #333; /* Set a color or any other styles you prefer */
+}
+
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <div class="button-container">
+            <button id="login" onclick="window.location.href='login.html'">Sign-in</button>
+            <span class="welcome-text">Welcome to my project</span>
+            <button id="submit" onclick="window.location.href='sign-up.html'">Sign-up</button>
+        </div>
+        
+    </div>
+    <div class="container">
+       
+        <div class="monster">
+            <div class="eye" id="leftEye"></div>
+            <div class="eye" id="rightEye"></div>
+        </div>
+        <div class="monster-body">
+            <div class="arm" id="leftArm"></div>
+            <div class="arm" id="rightArm"></div>
+            <div class="leg" id="leftLeg"></div>
+            <div class="leg" id="rightLeg"></div>
+        </div>
+    </div>
+    <script>
+        const monster = document.querySelector('.monster');
+const monsterBody = document.querySelector('.monster-body');
+const leftEye = document.getElementById('leftEye');
+const rightEye = document.getElementById('rightEye');
+
+function computeAngle(x1, y1, x2, y2) {
+    return Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+}
+
+document.addEventListener('mousemove', function(e) {
+    const monsterX = window.innerWidth / 2;
+    const monsterY = window.innerHeight / 2;
+
+    const angle = computeAngle(monsterX, monsterY, e.clientX, e.clientY);
+
+    const distance = 20;
+    const offsetX = Math.cos(angle * (Math.PI / 180)) * distance;
+    const offsetY = Math.sin(angle * (Math.PI / 180)) * distance;
+
+    leftEye.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+    rightEye.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+
+    monster.style.transform = `translate(-50%, 0) rotate(${angle / 8}deg)`;
+    monsterBody.style.transform = `translate(-50%, 0) rotate(${angle / 15}deg)`;
+});
+
+    </script>
+</body>
+</html>
